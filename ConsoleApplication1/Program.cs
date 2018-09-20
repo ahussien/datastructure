@@ -33,7 +33,16 @@ namespace ConsoleApplication1
 
             //CheckPermutation2("dfd", "god");
 
-            PalindromePermutation("abdab");
+            //  PalindromePermutation("abdab");
+
+            //var x = OneWayString("pale", "ple");
+            //var y = OneWayString("pales", "pale");
+            //var z = OneWayString("pale", "bale");
+            //var f = OneWayString("pale", "bae");
+
+
+            StringCompression("aabcccccaaa");
+
 
         }
 
@@ -180,6 +189,69 @@ namespace ConsoleApplication1
             }
 
             return count <= 1;
+        }
+
+        static bool OneWayString(string str1, string str2)
+        {
+            //Wrong algorithm
+            Dictionary<char, int> counts = new Dictionary<char, int>();
+            for (int i = 0; i < str1.Length; i++)
+            {
+                char key = str1[i];
+
+                if (counts.ContainsKey(key))
+                {
+                    counts[key] = counts[key] + 1;
+                }
+                else
+                {
+                    counts[key] = 1;
+                }
+            }
+
+            for (int i = 0; i < str2.Length; i++)
+            {
+                char key = str2[i];
+
+                if (counts.ContainsKey(key))
+                {
+                    counts[key] = counts[key] + 1;
+                }
+                else
+                {
+                    counts[key] = 1;
+                }
+            }
+
+            int count = 0;
+            foreach (var ele in counts)
+            {
+                int reminder = ele.Value % 2;
+                count += reminder;
+            }
+
+            return count <= 1;
+        }
+
+        private static string StringCompression(string str1)
+        {
+            StringBuilder compressed = new StringBuilder();
+            int countConsecutive = 0;
+
+            for (int i = 0; i < str1.Length; i++)
+            {
+                countConsecutive++;
+                /* If next character is different than current, append this char to result.*/
+                if (i + 1 >= str1.Length || str1[i] != str1[i + 1])
+                {
+                    compressed.Append(str1[i]);
+                    compressed.Append(countConsecutive);
+                    countConsecutive = 0;
+                }
+            }
+
+
+            return compressed.Length < str1.Length ? compressed.ToString() : str1;
         }
     }
 
