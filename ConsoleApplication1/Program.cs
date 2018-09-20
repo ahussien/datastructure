@@ -29,11 +29,11 @@ namespace ConsoleApplication1
             //string sbString = sb.ToString();
 
 
-            IsUniqByHashtable("aabcd");
+            //IsUniqByHashtable("aabcd");
 
-            CheckPermutation2("dfd", "god");
+            //CheckPermutation2("dfd", "god");
 
-            PalindromePermutation("abcab");
+            PalindromePermutation("abdab");
 
         }
 
@@ -157,14 +157,14 @@ namespace ConsoleApplication1
 
         static bool PalindromePermutation(string str1)
         {
-            Hashtable counts = new Hashtable();
+            Dictionary<char, int> counts = new Dictionary<char, int>();
             for (int i = 0; i < str1.Length; i++)
             {
-                int key = str1[i];
+                char key = str1[i];
 
                 if (counts.ContainsKey(key))
                 {
-                    counts[key] = (int) counts[key] + 1;
+                    counts[key] = counts[key] + 1;
                 }
                 else
                 {
@@ -172,9 +172,14 @@ namespace ConsoleApplication1
                 }
             }
 
+            int count = 0;
+            foreach (var ele in counts)
+            {
+                int reminder = ele.Value % 2;
+                count += reminder;
+            }
 
-
-            return true;
+            return count <= 1;
         }
     }
 
